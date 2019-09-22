@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import po.*;
+import pf.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,13 +36,14 @@ public class MailTest {
         logInPage.clickEnterButtonLoginPage();
 
 
+
     }
 
     @Test(description = "Test send mail")
     public void sendMailTest() throws InterruptedException {
         precondition();
         HomePage homePage = new HomePage(driver);
-        WebElement elementMailUsername = driver.findElement(By.xpath("//div[@class='mail-User-Name']"));
+        WebElement elementMailUsername = homePage.getElementMailUsername();
         Assert.assertEquals("epam.selenium", elementMailUsername.getText(), "Test user login failed");
         homePage.clickWriteMessageButton();
         WriteMessagePage writeMessagePage = new WriteMessagePage(driver);
@@ -53,7 +54,6 @@ public class MailTest {
         homePage.clickInboxFolder();
         writeMessagePage.clickSaveDraft();
         homePage.clickDraftFolder();
-        Thread.sleep(20000);
         DraftPage draftPage = new DraftPage(driver);
         draftPage.checkDraftAddressee();
         Assert.assertEquals(draftPage.getActualText(), "epam.selenium","Failed to find epam.selenium addressee");
