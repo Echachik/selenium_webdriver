@@ -1,7 +1,6 @@
-import org.openqa.selenium.By;
+import driver.DriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
@@ -15,9 +14,8 @@ public class MailTest {
 
     @BeforeMethod(description = "Start browser")
     private void initBrowser() {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        driver = DriverSingleton.getDriver();
+        //driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
@@ -34,8 +32,6 @@ public class MailTest {
         logInPage.clickEnterButton();
         logInPage.fillInPasswordField();
         logInPage.clickEnterButtonLoginPage();
-
-
 
     }
 
@@ -79,7 +75,7 @@ public class MailTest {
 
     @AfterClass(description = "close browser")
     public void kill(){
-        driver.close();
+        DriverSingleton.closeDriver();
 
     }
 
